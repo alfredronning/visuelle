@@ -169,7 +169,7 @@ def main():
 
     trainer = HexTrainer(startState = startState,
         anet = anet,
-        numberOfGames = 2400,
+        numberOfGames = 3200,
         numberOfSimulations = 1200,
         batchSize = 64,
         verbose = False,
