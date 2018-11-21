@@ -3,6 +3,7 @@ from sklearn import preprocessing
 from copy import deepcopy
 from HexState import HexState
 from MCNode import MCNode
+import random
 
 class MCST():
     def __init__(self, startNode, anet, replayBuffer, numberOfSimulations):
@@ -26,8 +27,15 @@ class MCST():
                 selectedNode = selectedNode.getRandomChild()
 
             #simulate a single rollout
+
+            #anet rollouts
             #score = self.rollout(selectedNode) #27.7s
             score = self.rollout2(selectedNode) #20.9s
+            
+            #anet with element of random
+            score = self.rollout3(selectedNode)
+
+            #random rolluts
             #score = self.randomRollout(selectedNode) #5.0s
             #score = self.randomRollout2(selectedNode) #3.9s
 
@@ -86,6 +94,27 @@ class MCST():
             index = np.where(anetOutput == max(anetOutput))[0][0]
             #need to remove one index for each illegal move, because there is no child for that move
             stateCopy.makeMove(index)
+        return 1 if stateCopy.getWinner() == self.startingPlayer else -1
+
+    def rollout3(self, selectedNode):
+        stateCopy = HexState(selectedNode.state.player, selectedNode.state.hexSize, selectedNode.state.legalMoves[:], [row[:] for row in selectedNode.state.board])
+        """Plays out random untill terminal state"""
+        while(not stateCopy.isOver()):
+            #random elment 0, 1, 2 or 3
+            randomElement = random.randint(0, 4)
+            #do a random move with 25% propability
+            if randomElement == 0:
+                stateCopy.playRandom()
+            else:
+                neuralState = stateCopy.getNeuralRepresentation()
+                feeder = {self.anet.input: [neuralState]}
+                anetOutput = self.anet.current_session.run(self.anet.output, feed_dict=feeder)[0]
+                legalMoves = stateCopy.legalMoves
+                for i in range(len(anetOutput)):
+                    anetOutput[i] = anetOutput[i] * legalMoves[i]
+                index = np.where(anetOutput == max(anetOutput))[0][0]
+                #need to remove one index for each illegal move, because there is no child for that move
+                stateCopy.makeMove(index)
         return 1 if stateCopy.getWinner() == self.startingPlayer else -1
 
     def randomRollout(self, selectedNode):

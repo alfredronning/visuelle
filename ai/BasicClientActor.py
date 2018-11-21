@@ -4,10 +4,10 @@ from TOPP import HexAgent
 from HexState import HexState
 
 class BasicClientActor(BasicClientActorAbs):
-    def __init__(self, IP_address = None,verbose=True):
+    def __init__(self, IP_address = None, verbose=False):
         self.series_id = -1
         BasicClientActorAbs.__init__(self, IP_address,verbose=verbose)
-        self.agent = HexAgent([52, 52, 25, 25], 5, "netsaver/topp5final2/agent", 4, 1)
+        self.agent = HexAgent([52, 52, 25, 25], 5, "netsaver/topp5final3/agent", 7, 1)
 
     def handle_get_action(self, state):
         """
@@ -26,12 +26,16 @@ class BasicClientActor(BasicClientActorAbs):
 
         inputState = [i for i in state[1:]]
 
+
         #transpose
         if flipSides:
             for i in range(5):
                 for j in range(5):
                     inputState[i*5+j] = state[j*5+i+1]
 
+
+        """ bstate = HexState(1, 5, board = [[val for val in inputState[i*5:i*5+5]] for i in range(5)])
+        bstate.printBoard() """
 
         #converts state to our input format for anet
         for i in range(0, 25):
@@ -48,7 +52,10 @@ class BasicClientActor(BasicClientActorAbs):
 
         #gets index of move from the agent
         move = self.agent.giveMoveFromState(neuralRepr)
-        
+
+        """ bstate.makeMove(move)
+        bstate.printBoard() """
+
         #tuple representation of the index
         next_move = (int(move/5), move%5)
 

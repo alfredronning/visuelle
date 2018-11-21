@@ -169,16 +169,16 @@ def main():
 
     trainer = HexTrainer(startState = startState,
         anet = anet,
-        numberOfGames = 3200,
+        numberOfGames = 3300,
         numberOfSimulations = 1200,
         batchSize = 64,
         verbose = False,
-        savedGames = 9,
-        saveFolder = "netsaver/topp5final3/",
+        savedGames = 11,
+        saveFolder = "netsaver/topp5final4/",
         graph=True)
 
 
-    trainer.load_params('netsaver/topp5final2/agent', 4)
+    trainer.load_params('netsaver/topp5final3/agent', 8)
 
     trainer.run()
 

@@ -105,10 +105,10 @@ def main():
 
     topp = TOPP(layerDims=[size*size*2+2, size*size, size*size],
         hexSize = size,
-        numberOfAgents = 5,
-        games = 20,
+        numberOfAgents = 1,
+        games = 60,
         loadPath = "netsaver/topp5/agent",
-        verbose = False,
+        verbose = True,
         bestk = bk)
 
     """ agents = []
@@ -123,10 +123,16 @@ def main():
         agents[i].name = "agent-final-"+str(i)
     topp.agents += agents
  """
-    agents = []
+    """ agents = []
     for i in range(5):
         agents.append(HexAgent([size*size*2+2, size*size*2+2, size*size, size*size], 5, "netsaver/topp5final2/agent", i, bk))
         agents[i].name = "agent-final2-"+str(i)
+    topp.agents += agents """
+
+    agents = []
+    for i in range(7, 8):
+        agents.append(HexAgent([size*size*2+2, size*size*2+2, size*size, size*size], 5, "netsaver/topp5final3/agent", i, bk))
+        agents[i-8].name = "agent-final3-"+str(i)
     topp.agents += agents
 
     topp.playTournament()
