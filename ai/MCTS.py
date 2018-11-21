@@ -30,7 +30,7 @@ class MCST():
 
             #anet rollouts
             #score = self.rollout(selectedNode) #27.7s
-            score = self.rollout2(selectedNode) #20.9s
+            #score = self.rollout2(selectedNode) #20.9s
             
             #anet with element of random
             score = self.rollout3(selectedNode)
