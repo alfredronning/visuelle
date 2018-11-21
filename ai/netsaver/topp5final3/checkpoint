@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 model_checkpoint_path: "agent-0"
 all_model_checkpoint_paths: "agent-0"
+=======
+model_checkpoint_path: "agent-8"
+all_model_checkpoint_paths: "agent-8"
+>>>>>>> 52abbd444045b0e02d06e2afe78a89b6fc10a07f
