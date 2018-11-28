@@ -33,11 +33,11 @@ class MCST():
             #score = self.rollout2(selectedNode) #20.9s
             
             #anet with element of random
-            score = self.rollout3(selectedNode)
+            #score = self.rollout3(selectedNode)
 
             #random rolluts
             #score = self.randomRollout(selectedNode) #5.0s
-            #score = self.randomRollout2(selectedNode) #3.9s
+            score = self.randomRollout2(selectedNode) #3.9s
 
             #backpropogate the score from the rollout from the selected node up to root
             self.backPropagate(selectedNode, score)
@@ -101,7 +101,7 @@ class MCST():
         """Plays out random untill terminal state"""
         while(not stateCopy.isOver()):
             #random elment 0, 1, 2 or 3
-            randomElement = random.randint(0, 4)
+            randomElement = random.randint(0, 5)
             #do a random move with 25% propability
             if randomElement == 0:
                 stateCopy.playRandom()

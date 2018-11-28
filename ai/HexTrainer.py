@@ -58,8 +58,8 @@ class HexTrainer():
             mcst = MCST(currentNode, self.anet, self.replayBuffer, self.numberOfSimulations)
 
             #removes 200 first cases in the replaybuffer if it goes over 800
-            if len(self.replayBuffer) > 800:
-                self.replayBuffer = self.replayBuffer[200:]
+            if len(self.replayBuffer) > 4000:
+                self.replayBuffer = self.replayBuffer[400:]
 
 
             print("\nGame "+str(i))
@@ -146,12 +146,12 @@ class HexTrainer():
     
 
 def main():
-    size = 5
+    size = 7
 
     startState = HexState(player = 1, hexSize = size)
 
     anet = ANET(
-        layer_dims = [size*size*2+2, size*size*2+2, size*size , size*size],
+        layer_dims = [size*size*2+2, size*size*2+2, size*size*4+4, size*size , size*size],
         case_manager = CaseManager([]),
         learning_rate=0.001,
         display_interval=None,
@@ -169,16 +169,16 @@ def main():
 
     trainer = HexTrainer(startState = startState,
         anet = anet,
-        numberOfGames = 3300,
-        numberOfSimulations = 1400,
+        numberOfGames = 5400,
+        numberOfSimulations = 1000,
         batchSize = 128,
         verbose = False,
-        savedGames = 12,
-        saveFolder = "netsaver/topp5final5/",
+        savedGames = 21,
+        saveFolder = "netsaver/topp7/",
         graph=True)
 
 
-    trainer.load_params('netsaver/topp5final4/agent', 10)
+    #trainer.load_params('netsaver/topp5final5/agent', 11)
 
     trainer.run()
 
